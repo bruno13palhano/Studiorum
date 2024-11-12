@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(compose.material3)
+            implementation(libs.runtime)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
