@@ -4,8 +4,13 @@ import com.bruno13palhano.data.database.sqlDriverModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
-fun applicationModule() =
-    listOf(repositoryModule, databaseModule, sqlDriverModule, localDataSourceModule)
+fun applicationModule() = listOf(
+    repositoryModule,
+    databaseModule,
+    sqlDriverModule,
+    localDataSourceModule,
+    viewModelModule
+)
 
 fun initKoin(appDeclaration: KoinAppDeclaration) {
     startKoin {
