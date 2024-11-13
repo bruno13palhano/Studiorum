@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.nav)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.coroutines.extensions)
+            implementation(libs.molecule)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
