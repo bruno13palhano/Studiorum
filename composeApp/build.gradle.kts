@@ -29,6 +29,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.android.driver)
             implementation(libs.ktor.client.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -48,6 +49,9 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel.nav)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.coroutines.extensions)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
