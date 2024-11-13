@@ -20,7 +20,7 @@ json-version = "1.6.3"
 materialIconsExtended = "1.6.7"
 sqlDelight = "2.0.2"
 androidx-navigation = "2.8.0-alpha02"
-koin = "3.5.3"
+koin = "4.0.0"
 ktor = "2.3.7"
 coroutinesVersion = "1.9.0"
 lifecycleViewmodelCompose = "2.7.0"
@@ -55,6 +55,8 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref="material3" }
+koin-compose-viewmodel = {module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin"}
+koin-compose-viewmodel-nav = {module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
