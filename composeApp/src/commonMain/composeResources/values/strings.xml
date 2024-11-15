@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Studiorum</string>
+    <string name="books_title">Books</string>
+    <string name="new_book_title">New Book</string>
+    <string name="edit_book_title">%S</string>
+    <string name="add_new_book">Add a new book</string>
+</resources>
