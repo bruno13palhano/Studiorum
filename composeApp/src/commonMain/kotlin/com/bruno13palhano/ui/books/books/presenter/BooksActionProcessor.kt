@@ -8,6 +8,8 @@ internal class BooksActionProcessor : ActionProcessor<BooksAction, BooksEvent> {
             is BooksAction.OnNewBookClick -> BooksEvent.NewBook
 
             is BooksAction.OnBookClick -> BooksEvent.EditBook(viewAction.id)
+
+            is BooksAction.OnIconMenuClick -> BooksEvent.OpenDrawerMenu
         }
     }
 }

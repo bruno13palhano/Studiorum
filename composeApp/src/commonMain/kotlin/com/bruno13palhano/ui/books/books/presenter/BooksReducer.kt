@@ -20,6 +20,8 @@ internal class BooksReducer : Reducer<BooksState, BooksEvent, BooksSideEffect> {
             is BooksEvent.EditBook -> {
                 previousState.copy() to BooksSideEffect.NavigateToEditBook(id = event.id)
             }
+
+            is BooksEvent.OpenDrawerMenu -> previousState to BooksSideEffect.OpenDrawerMenu
         }
     }
 }

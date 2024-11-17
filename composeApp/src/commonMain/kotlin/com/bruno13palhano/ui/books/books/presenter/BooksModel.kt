@@ -26,6 +26,7 @@ internal sealed interface BooksEvent : ViewEvent {
     data class UpdateBooks(val books: List<Book>) : BooksEvent
     data object NewBook : BooksEvent
     data class EditBook(val id: Long) : BooksEvent
+    data object OpenDrawerMenu : BooksEvent
 }
 
 @Immutable
@@ -33,10 +34,12 @@ internal sealed interface BooksSideEffect : ViewSideEffect {
     data object Loading : BooksSideEffect
     data object NavigateToNewBook : BooksSideEffect
     data class NavigateToEditBook(val id: Long) : BooksSideEffect
+    data object OpenDrawerMenu : BooksSideEffect
 }
 
 @Immutable
 internal sealed interface BooksAction : ViewAction {
     data object OnNewBookClick : BooksAction
     data class OnBookClick(val id: Long) : BooksAction
+    data object OnIconMenuClick : BooksAction
 }

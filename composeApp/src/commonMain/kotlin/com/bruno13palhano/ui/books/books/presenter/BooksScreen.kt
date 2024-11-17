@@ -6,9 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ internal fun BooksRoute(
     modifier: Modifier = Modifier,
     navigateToNewBook: () -> Unit,
     navigateToEditBook: (id: Long) -> Unit,
+    onIconMenuClick: () -> Unit,
     viewModel: BooksViewModel = koinViewModel<BooksViewModel>()
 ) {
     val state by viewModel.state.collectAsState()
@@ -46,6 +49,8 @@ internal fun BooksRoute(
                 is BooksSideEffect.NavigateToNewBook -> navigateToNewBook()
 
                 is BooksSideEffect.NavigateToEditBook -> navigateToEditBook(effect.id)
+
+                is BooksSideEffect.OpenDrawerMenu -> onIconMenuClick()
             }
         }
     }
@@ -70,7 +75,12 @@ private fun BooksContent(
             TopAppBar(
                 title = { Text(text = stringResource(Res.string.books_title)) },
                 navigationIcon = {
-
+                    IconButton(onClick = { onAction(BooksAction.OnIconMenuClick) }) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = null
+                        )
+                    }
                 }
             )
         },
