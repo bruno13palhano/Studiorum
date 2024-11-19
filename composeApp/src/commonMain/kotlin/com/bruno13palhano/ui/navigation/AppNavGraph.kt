@@ -1,6 +1,5 @@
 package com.bruno13palhano.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -9,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.bruno13palhano.ui.books.books.presenter.BooksRoute
+import com.bruno13palhano.ui.books.editbook.presenter.EditBookRoute
+import com.bruno13palhano.ui.books.newbook.presenter.NewBookRoute
 import com.bruno13palhano.ui.home.presenter.HomeRoute
 import kotlinx.serialization.Serializable
 
@@ -25,7 +26,10 @@ fun MainNavGraph(
     ) {
         navigation<Routes.Main>(startDestination = Routes.Home) {
             composable<Routes.Home> {
-                HomeRoute(modifier = modifier)
+                HomeRoute(
+                    modifier = modifier,
+                    openDrawerMenu = onIconMenuClick
+                )
             }
 
             composable<Routes.Books> {
@@ -36,18 +40,26 @@ fun MainNavGraph(
                     },
                     navigateToEditBook = {
                         navController.navigate(Routes.EditBook(id = it))
-                    }
+                    },
+                    onIconMenuClick = onIconMenuClick
                 )
             }
 
             composable<Routes.NewBook> {
-                Text("New Book")
+                NewBookRoute(
+                    modifier = modifier,
+                    navigateBack = { navController.navigateUp() }
+                )
             }
 
             composable<Routes.EditBook> {
                 val id = it.toRoute<Routes.EditBook>().id
 
-                Text("Edit Book with id: $id")
+                EditBookRoute(
+                    modifier = modifier,
+                    id = id,
+                    navigateBack = { navController.navigateUp() }
+                )
             }
         }
     }
