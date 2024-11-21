@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bruno13palhano.ui.navigation.Routes
 import kotlinx.coroutines.launch
@@ -71,7 +72,7 @@ internal fun DrawerMenu(
                             text = stringResource(Res.string.app_name)
                         )
                     }
-                    items(items = menuItems, key = { item -> item.route} ) { item ->
+                    items(items = menuItems) { item ->
                         val selected = currentDestination?.isRouteSelected(screen = item)
 
                         NavigationDrawerItem(
@@ -85,7 +86,7 @@ internal fun DrawerMenu(
                             onClick = {
                                 selectedItem = item
                                 navController.navigate(route = item.route) {
-                                    popUpTo(navController.graph.startDestinationId) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
                                     launchSingleTop = true
@@ -113,13 +114,13 @@ internal sealed class Screen<T: Routes>(
     val icon: ImageVector,
     val titleResource: StringResource
 ) {
-    data object Home : Screen<Routes.Home>(
+    data object Home : Screen<Routes>(
         route = Routes.Home,
         icon = Icons.Filled.Home,
         titleResource = Res.string.home_title
     )
 
-    data object Books : Screen<Routes.Books>(
+    data object Books : Screen<Routes>(
         route = Routes.Books,
         icon = Icons.AutoMirrored.Filled.List,
         titleResource = Res.string.books_title
