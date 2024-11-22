@@ -5,4 +5,10 @@
     <string name="new_book_title">New Book</string>
     <string name="edit_book_title">%1$s</string>
     <string name="add_new_book">Add a new book</string>
+    <string name="title">Title</string>
+    <string name="title_placeholder">Enter title</string>
+    <string name="author">Author</string>
+    <string name="author_placeholder">Enter author</string>
+    <string name="pages">Pages</string>
+    <string name="pages_placeholder">Enter pages</string>
 </resources>
