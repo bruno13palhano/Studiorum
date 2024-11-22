@@ -8,16 +8,9 @@ import com.bruno13palhano.ui.shared.ViewSideEffect
 import com.bruno13palhano.ui.shared.ViewState
 
 @Immutable
-internal data class BooksState(
-    val loading: Boolean,
-    val books: List<Book>
-) : ViewState {
-    companion object {
-        val initialState = BooksState(
-            loading = false,
-            books = emptyList()
-        )
-    }
+internal sealed interface BooksState : ViewState {
+    data object Loading : BooksState
+    data class Books(val books: List<Book>) : BooksState
 }
 
 @Immutable
@@ -31,7 +24,6 @@ internal sealed interface BooksEvent : ViewEvent {
 
 @Immutable
 internal sealed interface BooksSideEffect : ViewSideEffect {
-    data object Loading : BooksSideEffect
     data object NavigateToNewBook : BooksSideEffect
     data class NavigateToEditBook(val id: Long) : BooksSideEffect
     data object OpenDrawerMenu : BooksSideEffect

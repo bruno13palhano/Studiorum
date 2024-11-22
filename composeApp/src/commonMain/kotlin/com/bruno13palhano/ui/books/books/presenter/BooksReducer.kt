@@ -8,17 +8,14 @@ internal class BooksReducer : Reducer<BooksState, BooksEvent, BooksSideEffect> {
         event: BooksEvent
     ): Pair<BooksState, BooksSideEffect?> {
         return when (event) {
-            is BooksEvent.Loading -> previousState.copy(loading = true) to BooksSideEffect.Loading
+            is BooksEvent.Loading -> BooksState.Loading to null
 
-            is BooksEvent.UpdateBooks -> previousState.copy(
-                loading = false,
-                books = event.books
-            ) to null
+            is BooksEvent.UpdateBooks -> BooksState.Books(books = event.books) to null
 
-            is BooksEvent.NewBook -> previousState.copy() to BooksSideEffect.NavigateToNewBook
+            is BooksEvent.NewBook -> previousState to BooksSideEffect.NavigateToNewBook
 
             is BooksEvent.EditBook -> {
-                previousState.copy() to BooksSideEffect.NavigateToEditBook(id = event.id)
+                previousState to BooksSideEffect.NavigateToEditBook(id = event.id)
             }
 
             is BooksEvent.OpenDrawerMenu -> previousState to BooksSideEffect.OpenDrawerMenu

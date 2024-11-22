@@ -1,6 +1,9 @@
 package com.bruno13palhano.ui.books.books.presenter
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +15,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,7 +24,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.bruno13palhano.model.Book
 import com.bruno13palhano.ui.books.books.viewmodel.BooksViewModel
+import com.bruno13palhano.ui.components.CircularProgress
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -42,10 +48,6 @@ internal fun BooksRoute(
     LaunchedEffect(sideEffect) {
         sideEffect.collect { effect ->
             when (effect) {
-                is BooksSideEffect.Loading -> {
-
-                }
-
                 is BooksSideEffect.NavigateToNewBook -> navigateToNewBook()
 
                 is BooksSideEffect.NavigateToEditBook -> navigateToEditBook(effect.id)
@@ -93,17 +95,52 @@ private fun BooksContent(
             }
         }
     ) {
-        LazyColumn(modifier = Modifier.padding(it)) {
-            items(items = state.books, key = { book -> book.id }) { book ->
-                ListItem(
-                    modifier = Modifier.clickable {
-                        onAction(BooksAction.OnBookClick(book.id))
-                    },
-                    headlineContent = {
-                        Text(text = book.title)
-                    }
+        when (state) {
+            is BooksState.Loading -> {
+                CircularProgress(
+                    modifier = Modifier
+                        .padding(it)
+                        .fillMaxSize()
                 )
             }
+
+            is BooksState.Books -> {
+                BookList(
+                    paddingValues = it,
+                    books = state.books,
+                    onAction = onAction
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun BookList(
+    paddingValues: PaddingValues,
+    books: List<Book>,
+    onAction: (action: BooksAction) -> Unit
+) {
+    LazyColumn(modifier = Modifier.padding(paddingValues)) {
+        items(items = books, key = { book -> book.id }) { book ->
+            ListItem(
+                modifier = Modifier.clickable {
+                    onAction(BooksAction.OnBookClick(book.id))
+                },
+                headlineContent = {
+                    Column {
+                        Text(
+                            text = book.title,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+
+                        Text(
+                            text = book.author,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            )
         }
     }
 }

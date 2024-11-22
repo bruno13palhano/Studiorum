@@ -18,7 +18,7 @@ internal fun booksPresenter(
     sendEvent: (event: BooksEvent) -> Unit,
     sendSideEffect: (sideEffect: BooksSideEffect) -> Unit
 ): BooksState {
-    val state = remember { mutableStateOf(BooksState.initialState) }
+    val state = remember { mutableStateOf<BooksState>(BooksState.Loading) }
 
     HandleEvents(
         events = events,
