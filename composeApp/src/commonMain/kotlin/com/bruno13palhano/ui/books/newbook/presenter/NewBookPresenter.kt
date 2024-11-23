@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.bruno13palhano.data.datasource.BookRepository
+import com.bruno13palhano.ui.books.shared.BookFields
 import com.bruno13palhano.ui.shared.Reducer
 import kotlinx.coroutines.flow.Flow
 
@@ -28,7 +29,7 @@ internal fun newBookPresenter(
     Insert(
         insert = state.value.insert,
         bookRepository = bookRepository,
-        newBookFields = state.value.bookFields
+        bookFields = state.value.bookFields
     )
 
     return state.value
@@ -55,11 +56,11 @@ private fun HandleEvents(
 private fun Insert(
     insert: Boolean,
     bookRepository: BookRepository,
-    newBookFields: NewBookFields
+    bookFields: BookFields
 ) {
     LaunchedEffect(insert) {
         if (insert) {
-            bookRepository.insert(book = newBookFields.toBook())
+            bookRepository.insert(book = bookFields.toBook())
         }
     }
 }

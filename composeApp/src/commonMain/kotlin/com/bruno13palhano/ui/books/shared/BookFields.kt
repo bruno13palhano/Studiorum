@@ -1,11 +1,11 @@
-package com.bruno13palhano.ui.books.newbook.presenter
+package com.bruno13palhano.ui.books.shared
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.bruno13palhano.model.Book
 
-internal class NewBookFields {
+internal class BookFields {
     var title by mutableStateOf("")
         private set
     var author by mutableStateOf("")
