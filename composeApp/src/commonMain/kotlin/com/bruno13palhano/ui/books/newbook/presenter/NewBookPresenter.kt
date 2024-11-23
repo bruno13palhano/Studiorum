@@ -6,7 +6,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.bruno13palhano.data.datasource.BookRepository
-import com.bruno13palhano.model.Book
 import com.bruno13palhano.ui.shared.Reducer
 import kotlinx.coroutines.flow.Flow
 
