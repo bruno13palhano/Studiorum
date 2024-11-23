@@ -24,7 +24,6 @@ internal class NewBookViewModel(
             bookRepository = bookRepository,
             reducer = reducer,
             events = events,
-            sendEvent = ::sendEvent,
             sendSideEffect = ::sendSideEffect
         )
     }
