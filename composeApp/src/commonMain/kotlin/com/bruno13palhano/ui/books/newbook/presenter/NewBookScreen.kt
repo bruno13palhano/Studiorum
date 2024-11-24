@@ -1,7 +1,6 @@
 package com.bruno13palhano.ui.books.newbook.presenter
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -27,7 +26,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.ui.books.newbook.viewmodel.NewBookViewModel
-import com.bruno13palhano.ui.components.CircularProgress
 import com.bruno13palhano.ui.components.CustomIntegerField
 import com.bruno13palhano.ui.components.CustomTextField
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
@@ -58,10 +56,6 @@ internal fun NewBookRoute(
     LaunchedEffect(sideEffect) {
         sideEffect.collect { effect ->
             when (effect) {
-                is NewBookSideEffect.Loading -> {
-
-                }
-
                 is NewBookSideEffect.InvalidField -> {
                     scope.launch {
                         snackbarHostState.showSnackbar(
@@ -120,40 +114,36 @@ private fun NewBookContent(
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
 
-        if (state.loading) {
-            CircularProgress(modifier = Modifier.fillMaxSize())
-        } else {
-            Column(modifier = Modifier.padding(it)) {
-                CustomTextField(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth(),
-                    value = state.bookFields.title,
-                    onValueChange = state.bookFields::updateTitleChange,
-                    label = stringResource(Res.string.title),
-                    placeholder = stringResource(Res.string.title_placeholder)
-                )
+        Column(modifier = Modifier.padding(it)) {
+            CustomTextField(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                value = state.bookFields.title,
+                onValueChange = state.bookFields::updateTitleChange,
+                label = stringResource(Res.string.title),
+                placeholder = stringResource(Res.string.title_placeholder)
+            )
 
-                CustomTextField(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth(),
-                    value = state.bookFields.author,
-                    onValueChange = state.bookFields::updateAuthorChange,
-                    label = stringResource(Res.string.author),
-                    placeholder = stringResource(Res.string.author_placeholder)
-                )
+            CustomTextField(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                value = state.bookFields.author,
+                onValueChange = state.bookFields::updateAuthorChange,
+                label = stringResource(Res.string.author),
+                placeholder = stringResource(Res.string.author_placeholder)
+            )
 
-                CustomIntegerField(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth(),
-                    value = state.bookFields.pages,
-                    onValueChange = state.bookFields::updatePagesChange,
-                    label = stringResource(Res.string.pages),
-                    placeholder = stringResource(Res.string.pages_placeholder)
-                )
-            }
+            CustomIntegerField(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                value = state.bookFields.pages,
+                onValueChange = state.bookFields::updatePagesChange,
+                label = stringResource(Res.string.pages),
+                placeholder = stringResource(Res.string.pages_placeholder)
+            )
         }
     }
 }

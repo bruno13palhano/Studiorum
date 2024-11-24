@@ -9,14 +9,12 @@ import com.bruno13palhano.ui.shared.ViewState
 
 @Immutable
 internal data class NewBookState(
-    val loading: Boolean,
     val invalidField: Boolean,
     val insert: Boolean,
     val bookFields: BookFields
 ) : ViewState {
     companion object {
         val InitialState = NewBookState(
-            loading = false,
             invalidField = false,
             insert = false,
             bookFields = BookFields()
@@ -26,7 +24,6 @@ internal data class NewBookState(
 
 @Immutable
 internal sealed interface NewBookEvent : ViewEvent {
-    data object Loading : NewBookEvent
     data object InvalidField : NewBookEvent
     data object Done : NewBookEvent
     data object NavigateBack : NewBookEvent
@@ -34,7 +31,6 @@ internal sealed interface NewBookEvent : ViewEvent {
 
 @Immutable
 internal sealed interface NewBookSideEffect : ViewSideEffect {
-    data object Loading : NewBookSideEffect
     data object InvalidField : NewBookSideEffect
     data object NavigateBack : NewBookSideEffect
 }

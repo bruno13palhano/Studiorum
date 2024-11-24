@@ -8,21 +8,14 @@ internal class NewBookReducer : Reducer<NewBookState, NewBookEvent, NewBookSideE
         event: NewBookEvent
     ): Pair<NewBookState, NewBookSideEffect?> {
         return when (event) {
-            is NewBookEvent.Loading -> {
-                previousState.copy(loading = true) to null
-            }
-
             is NewBookEvent.InvalidField -> {
-                previousState.copy(
-                    loading = false,
-                    invalidField = true
-                ) to NewBookSideEffect.InvalidField
+                previousState.copy(invalidField = true) to NewBookSideEffect.InvalidField
             }
 
             is NewBookEvent.Done -> done(previousState = previousState)
 
             is NewBookEvent.NavigateBack -> {
-                previousState.copy(loading = false) to NewBookSideEffect.NavigateBack
+                previousState to NewBookSideEffect.NavigateBack
             }
         }
     }
