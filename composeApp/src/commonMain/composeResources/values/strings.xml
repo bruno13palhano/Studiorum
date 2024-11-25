@@ -3,7 +3,6 @@
     <string name="home_title">Home</string>
     <string name="books_title">Books</string>
     <string name="new_book_title">New Book</string>
-    <string name="edit_book_title">%1$s</string>
     <string name="add_new_book">Add a new book</string>
     <string name="title">Title</string>
     <string name="title_placeholder">Enter title</string>
