@@ -1,7 +1,5 @@
 package com.bruno13palhano.ui.books.newbook.presenter
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -24,23 +22,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.unit.dp
 import com.bruno13palhano.ui.books.newbook.viewmodel.NewBookViewModel
 import com.bruno13palhano.ui.books.shared.BookContent
-import com.bruno13palhano.ui.components.CustomIntegerField
-import com.bruno13palhano.ui.components.CustomTextField
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import studiorum.composeapp.generated.resources.Res
-import studiorum.composeapp.generated.resources.author
-import studiorum.composeapp.generated.resources.author_placeholder
 import studiorum.composeapp.generated.resources.new_book_title
-import studiorum.composeapp.generated.resources.pages
-import studiorum.composeapp.generated.resources.pages_placeholder
-import studiorum.composeapp.generated.resources.title
-import studiorum.composeapp.generated.resources.title_placeholder
 
 @Composable
 internal fun NewBookRoute(
