@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import com.bruno13palhano.model.Book
 
 internal class BookFields {
+    var id: Long = 0L
+        private set
     var title by mutableStateOf("")
         private set
     var author by mutableStateOf("")
@@ -27,10 +29,17 @@ internal class BookFields {
 
     fun isValid() = title.isNotBlank() && author.isNotBlank() && pages.isNotBlank()
 
-    fun toBook() = Book(
-        id = 0L,
+    fun toBook(id: Long = 0L) = Book(
+        id = id,
         title = title,
         author = author,
         pages = pages.toInt()
     )
+
+    fun fromBook(book: Book) {
+        id = book.id
+        title = book.title
+        author = book.author
+        pages = book.pages.toString()
+    }
 }
