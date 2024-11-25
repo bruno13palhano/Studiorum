@@ -8,6 +8,9 @@ CREATE TABLE IF NOT EXISTS Book (
 insert:
 INSERT INTO Book(title, author, pages) VALUES(?,?,?);
 
+update:
+UPDATE Book SET title = ?, author = ?, pages = ? WHERE id = ?;
+
 getById:
 SELECT B.id, B.title, B.author, B.pages FROM Book AS B WHERE id = ?;
 
