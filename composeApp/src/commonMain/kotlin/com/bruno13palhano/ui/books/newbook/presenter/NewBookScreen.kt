@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.ui.books.newbook.viewmodel.NewBookViewModel
+import com.bruno13palhano.ui.books.shared.BookContent
 import com.bruno13palhano.ui.components.CustomIntegerField
 import com.bruno13palhano.ui.components.CustomTextField
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
@@ -114,36 +115,14 @@ private fun NewBookContent(
         val focusManager = LocalFocusManager.current
         val keyboardController = LocalSoftwareKeyboardController.current
 
-        Column(modifier = Modifier.padding(it)) {
-            CustomTextField(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth(),
-                value = state.bookFields.title,
-                onValueChange = state.bookFields::updateTitleChange,
-                label = stringResource(Res.string.title),
-                placeholder = stringResource(Res.string.title_placeholder)
-            )
-
-            CustomTextField(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth(),
-                value = state.bookFields.author,
-                onValueChange = state.bookFields::updateAuthorChange,
-                label = stringResource(Res.string.author),
-                placeholder = stringResource(Res.string.author_placeholder)
-            )
-
-            CustomIntegerField(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .fillMaxWidth(),
-                value = state.bookFields.pages,
-                onValueChange = state.bookFields::updatePagesChange,
-                label = stringResource(Res.string.pages),
-                placeholder = stringResource(Res.string.pages_placeholder)
-            )
-        }
+        BookContent(
+            modifier = Modifier.padding(it),
+            title = state.bookFields.title,
+            author = state.bookFields.author,
+            pages = state.bookFields.pages,
+            updateTitleChange = state.bookFields::updateTitleChange,
+            updateAuthorChange = state.bookFields::updateAuthorChange,
+            updatePagesChange = state.bookFields::updatePagesChange
+        )
     }
 }
