@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface BookRepository {
     suspend fun insert(book: Book)
 
+    suspend fun update(book: Book)
+
     fun getById(id: Long): Flow<Book?>
 
     fun getAll(): Flow<List<Book>>

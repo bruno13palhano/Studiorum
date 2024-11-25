@@ -22,6 +22,15 @@ class BookDataSourceImpl(
         )
     }
 
+    override suspend fun update(book: Book) {
+        bookQueries.update(
+            title = book.title,
+            author = book.author,
+            pages = book.pages.toLong(),
+            id = book.id
+        )
+    }
+
     override fun getById(id: Long): Flow<Book?> {
         return bookQueries.getById(id = id, mapper = ::mapToBook)
             .asFlow()
