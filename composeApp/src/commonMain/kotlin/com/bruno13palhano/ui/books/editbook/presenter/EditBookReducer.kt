@@ -18,6 +18,8 @@ internal class EditBookReducer : Reducer<EditBookState, EditBookEvent, EditBookS
 
             is EditBookEvent.Done -> done(previousState = previousState)
 
+            is EditBookEvent.Delete -> previousState to EditBookSideEffect.NavigateBack
+
             is EditBookEvent.NavigateBack -> previousState to EditBookSideEffect.NavigateBack
         }
     }

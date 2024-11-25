@@ -40,6 +40,12 @@ internal fun editBookPresenter(
         bookFields = state.value.bookFields
     )
 
+    DeleteBook(
+        delete = state.value.delete,
+        bookRepository = bookRepository,
+        bookFields = state.value.bookFields
+    )
+
     return state.value
 }
 
@@ -88,6 +94,19 @@ private fun UpdateBook(
     LaunchedEffect(update) {
         if (update) {
             bookRepository.update(book = bookFields.toBook(id = bookFields.id))
+        }
+    }
+}
+
+@Composable
+private fun DeleteBook(
+    delete: Boolean,
+    bookRepository: BookRepository,
+    bookFields: BookFields
+) {
+    LaunchedEffect(delete) {
+        if (delete) {
+            bookRepository.delete(id = bookFields.id)
         }
     }
 }

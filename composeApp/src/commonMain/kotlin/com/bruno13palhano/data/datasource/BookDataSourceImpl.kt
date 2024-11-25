@@ -31,6 +31,10 @@ class BookDataSourceImpl(
         )
     }
 
+    override suspend fun delete(id: Long) {
+        bookQueries.delete(id = id)
+    }
+
     override fun getById(id: Long): Flow<Book?> {
         return bookQueries.getById(id = id, mapper = ::mapToBook)
             .asFlow()

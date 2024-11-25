@@ -12,6 +12,8 @@ internal class EditBookActionProcessor : ActionProcessor<EditBookAction, EditBoo
 
             is EditBookAction.OnDoneClick -> EditBookEvent.Done
 
+            is EditBookAction.OnDeleteClick -> EditBookEvent.Delete
+
             is EditBookAction.OnNavigateBackClick -> EditBookEvent.NavigateBack
         }
     }

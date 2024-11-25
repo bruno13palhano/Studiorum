@@ -12,6 +12,10 @@ class BookRepositoryImpl(private val bookDataSource: BookDataSource) : BookRepos
         bookDataSource.update(book = book)
     }
 
+    override suspend fun delete(id: Long) {
+        bookDataSource.delete(id = id)
+    }
+
     override fun getById(id: Long): Flow<Book?> {
         return bookDataSource.getById(id = id)
     }

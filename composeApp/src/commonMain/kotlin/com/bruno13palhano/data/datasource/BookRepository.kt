@@ -8,6 +8,8 @@ interface BookRepository {
 
     suspend fun update(book: Book)
 
+    suspend fun delete(id: Long)
+
     fun getById(id: Long): Flow<Book?>
 
     fun getAll(): Flow<List<Book>>
