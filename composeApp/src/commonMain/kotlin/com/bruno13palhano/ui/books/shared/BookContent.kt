@@ -23,6 +23,7 @@ internal fun BookContent(
     title: String,
     author: String,
     pages: String,
+    invalidField: Boolean,
     updateTitleChange: (String) -> Unit,
     updateAuthorChange: (String) -> Unit,
     updatePagesChange: (String) -> Unit
@@ -35,7 +36,8 @@ internal fun BookContent(
             value = title,
             onValueChange = updateTitleChange,
             label = stringResource(Res.string.title),
-            placeholder = stringResource(Res.string.title_placeholder)
+            placeholder = stringResource(Res.string.title_placeholder),
+            isError = invalidField && title.isBlank()
         )
 
         CustomTextField(
@@ -45,7 +47,8 @@ internal fun BookContent(
             value = author,
             onValueChange = updateAuthorChange,
             label = stringResource(Res.string.author),
-            placeholder = stringResource(Res.string.author_placeholder)
+            placeholder = stringResource(Res.string.author_placeholder),
+            isError = invalidField && author.isBlank()
         )
 
         CustomIntegerField(
@@ -55,7 +58,8 @@ internal fun BookContent(
             value = pages,
             onValueChange = updatePagesChange,
             label = stringResource(Res.string.pages),
-            placeholder = stringResource(Res.string.pages_placeholder)
+            placeholder = stringResource(Res.string.pages_placeholder),
+            isError = invalidField && pages.isBlank()
         )
     }
 }
