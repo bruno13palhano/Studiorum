@@ -1,7 +1,11 @@
 package com.bruno13palhano.ui.shared
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -17,5 +21,13 @@ fun <T> rememberFlowWithLifecycle(
     flow.flowWithLifecycle(
         lifecycle = lifecycleOwner.lifecycle,
         minActiveState = minActiveState
+    )
+}
+
+fun Modifier.clickableWithoutRipple(onClick: () -> Unit): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+        onClick = onClick
     )
 }

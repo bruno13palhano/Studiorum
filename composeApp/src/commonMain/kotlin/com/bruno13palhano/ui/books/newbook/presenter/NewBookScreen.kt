@@ -24,11 +24,15 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.bruno13palhano.ui.books.newbook.viewmodel.NewBookViewModel
 import com.bruno13palhano.ui.books.shared.BookContent
+import com.bruno13palhano.ui.shared.clickableWithoutRipple
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import studiorum.composeapp.generated.resources.Res
+import studiorum.composeapp.generated.resources.done
+import studiorum.composeapp.generated.resources.fill_missing_fields
+import studiorum.composeapp.generated.resources.navigate_back
 import studiorum.composeapp.generated.resources.new_book_title
 
 @Composable
@@ -42,6 +46,7 @@ internal fun NewBookRoute(
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val errorMessage = stringResource(Res.string.fill_missing_fields)
 
     LaunchedEffect(sideEffect) {
         sideEffect.collect { effect ->
@@ -49,7 +54,7 @@ internal fun NewBookRoute(
                 is NewBookSideEffect.InvalidField -> {
                     scope.launch {
                         snackbarHostState.showSnackbar(
-                            message = "Some message",
+                            message = errorMessage,
                             withDismissAction = true
                         )
                     }
@@ -76,8 +81,14 @@ private fun NewBookContent(
     state: NewBookState,
     onAction: (action: NewBookAction) -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.clickableWithoutRipple {
+            keyboardController?.hide()
+            focusManager.clearFocus()
+        },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
@@ -86,7 +97,7 @@ private fun NewBookContent(
                     IconButton(onClick = { onAction(NewBookAction.OnNavigateBackClick) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = stringResource(Res.string.navigate_back)
                         )
                     }
                 }
@@ -96,19 +107,17 @@ private fun NewBookContent(
             FloatingActionButton(onClick = { onAction(NewBookAction.OnDoneClick) }) {
                 Icon(
                     imageVector = Icons.Filled.Done,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.done)
                 )
             }
         }
     ) {
-        val focusManager = LocalFocusManager.current
-        val keyboardController = LocalSoftwareKeyboardController.current
-
         BookContent(
             modifier = Modifier.padding(it),
             title = state.bookFields.title,
             author = state.bookFields.author,
             pages = state.bookFields.pages,
+            invalidField = state.invalidField,
             updateTitleChange = state.bookFields::updateTitleChange,
             updateAuthorChange = state.bookFields::updateAuthorChange,
             updatePagesChange = state.bookFields::updatePagesChange
