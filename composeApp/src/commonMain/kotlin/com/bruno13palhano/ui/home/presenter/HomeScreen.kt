@@ -2,21 +2,19 @@ package com.bruno13palhano.ui.home.presenter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.bruno13palhano.ui.home.viewmodel.HomeViewModel
 import com.bruno13palhano.ui.shared.rememberFlowWithLifecycle
 import org.jetbrains.compose.resources.stringResource
@@ -26,8 +24,8 @@ import studiorum.composeapp.generated.resources.app_name
 
 @Composable
 fun HomeRoute(
-    navigateToNewBook: () -> Unit,
-    navigateToEditBook: (id: Long) -> Unit,
+    modifier: Modifier = Modifier,
+    openDrawerMenu: () -> Unit,
     viewModel: HomeViewModel = koinViewModel<HomeViewModel>()
 ) {
     val state by viewModel.state.collectAsState()
@@ -39,47 +37,44 @@ fun HomeRoute(
                 is HomeSideEffect.Loading -> {
 
                 }
+
+                is HomeSideEffect.OpenDrawerMenu -> openDrawerMenu()
             }
         }
     }
 
-    HomeContent(state = state, navigateToNewBook = navigateToNewBook)
+    HomeContent(
+        modifier = modifier,
+        state = state,
+        onAction = viewModel::onAction
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeContent(
+    modifier: Modifier = Modifier,
     state: HomeState,
-    navigateToNewBook: () -> Unit
+    onAction: (action: HomeAction) -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(Res.string.app_name)) })
+            TopAppBar(
+                title = { Text(text = stringResource(Res.string.app_name)) },
+                navigationIcon = {
+                    IconButton(onClick = { onAction(HomeAction.OnIconMenuClick) }) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
         }
     ) {
-//        LazyColumn(modifier = Modifier.padding(it)) {
-//            items(items = state.books, key = { book -> book.id }) { book ->
-//                Text(text = book.title)
-//            }
-//        }
-        val focusManager = LocalFocusManager.current
-        val keyboardController = LocalSoftwareKeyboardController.current
-
         Column(modifier = Modifier.padding(it)) {
-            TextField(
-                value = "",
-                onValueChange = {}
-            )
-            Button(
-                onClick = {
-                    focusManager.clearFocus(force = true)
-                    keyboardController?.hide()
 
-                    navigateToNewBook()
-                }
-            ) {
-                Text("Click me!")
-            }
         }
     }
 }

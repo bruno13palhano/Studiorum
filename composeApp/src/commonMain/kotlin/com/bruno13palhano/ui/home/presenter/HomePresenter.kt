@@ -18,7 +18,7 @@ fun homePresenter(
     sendEvent: (event: HomeEvent) -> Unit,
     sendSideEffect: (sideEffect: HomeSideEffect) -> Unit
 ): HomeState {
-    val state = remember { mutableStateOf(HomeState.initialState) }
+    val state = remember { mutableStateOf(HomeState.InitialState) }
 
     handleEvents(
         events = events,

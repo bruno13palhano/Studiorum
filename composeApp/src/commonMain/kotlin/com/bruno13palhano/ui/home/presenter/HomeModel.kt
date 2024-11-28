@@ -13,7 +13,7 @@ data class HomeState(
     val books: List<Book>
 ) : ViewState {
     companion object {
-        val initialState = HomeState(
+        val InitialState = HomeState(
             loading = false,
             books = emptyList()
         )
@@ -24,14 +24,16 @@ data class HomeState(
 sealed interface HomeEvent : ViewEvent {
     data object Loading : HomeEvent
     data class UpdateBooks(val books: List<Book>) : HomeEvent
+    data object OpenDrawerMenu : HomeEvent
 }
 
 @Immutable
 sealed interface HomeSideEffect : ViewSideEffect {
     data object Loading : HomeSideEffect
+    data object OpenDrawerMenu : HomeSideEffect
 }
 
 @Immutable
 sealed interface HomeAction : ViewAction {
-
+    data object OnIconMenuClick : HomeAction
 }

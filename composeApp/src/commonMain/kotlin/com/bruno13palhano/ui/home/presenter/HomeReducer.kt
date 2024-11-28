@@ -13,6 +13,8 @@ class HomeReducer : Reducer<HomeState, HomeEvent, HomeSideEffect> {
             is HomeEvent.UpdateBooks -> {
                 previousState.copy(loading = false, books = event.books) to null
             }
+
+            is HomeEvent.OpenDrawerMenu -> previousState to HomeSideEffect.OpenDrawerMenu
         }
     }
 }
