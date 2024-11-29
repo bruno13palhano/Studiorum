@@ -2,20 +2,21 @@ CREATE TABLE IF NOT EXISTS Book (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     author TEXT NOT NULL,
-    pages INTEGER NOT NULL
+    pages INTEGER NOT NULL,
+    timestamp INTEGER NOT NULL
 );
 
 insert:
-INSERT INTO Book(title, author, pages) VALUES(?,?,?);
+INSERT INTO Book(title, author, pages, timestamp) VALUES(?,?,?,?);
 
 update:
-UPDATE Book SET title = ?, author = ?, pages = ? WHERE id = ?;
+UPDATE Book SET title = ?, author = ?, pages = ?, timestamp = ? WHERE id = ?;
 
 delete:
 DELETE FROM Book WHERE id = ?;
 
 getById:
-SELECT B.id, B.title, B.author, B.pages FROM Book AS B WHERE id = ?;
+SELECT B.id, B.title, B.author, B.pages, timestamp FROM Book AS B WHERE id = ?;
 
 getAll:
-SELECT B.id, B.title, B.author, B.pages FROM Book AS B;
+SELECT B.id, B.title, B.author, B.pages, timestamp FROM Book AS B;

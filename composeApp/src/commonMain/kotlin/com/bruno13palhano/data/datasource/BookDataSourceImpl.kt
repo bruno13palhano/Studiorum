@@ -18,7 +18,8 @@ class BookDataSourceImpl(
         bookQueries.insert(
             title = book.title,
             author = book.author,
-            pages = book.pages.toLong()
+            pages = book.pages.toLong(),
+            timestamp = book.timestamp
         )
     }
 
@@ -27,7 +28,8 @@ class BookDataSourceImpl(
             title = book.title,
             author = book.author,
             pages = book.pages.toLong(),
-            id = book.id
+            id = book.id,
+            timestamp = book.timestamp
         )
     }
 
@@ -52,11 +54,13 @@ class BookDataSourceImpl(
         id: Long,
         title: String,
         author: String,
-        pages: Long
+        pages: Long,
+        timestamp: Long
     ) = Book(
         id = id,
         title = title,
         author = author,
-        pages = pages.toInt()
+        pages = pages.toInt(),
+        timestamp = timestamp
     )
 }

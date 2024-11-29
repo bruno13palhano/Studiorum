@@ -33,7 +33,8 @@ internal class BookFields {
         id = id,
         title = title,
         author = author,
-        pages = pages.toInt()
+        pages = pages.toInt(),
+        timestamp = System.currentTimeMillis()
     )
 
     fun fromBook(book: Book) {
