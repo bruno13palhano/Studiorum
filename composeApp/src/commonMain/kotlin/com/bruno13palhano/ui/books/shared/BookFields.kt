@@ -14,6 +14,10 @@ internal class BookFields {
         private set
     var pages by mutableStateOf("")
         private set
+    var categories by mutableStateOf(emptyList<String>())
+        private set
+    var wasRead by mutableStateOf(false)
+        private set
 
     fun updateTitleChange(newValue: String) {
         title = newValue
@@ -33,7 +37,9 @@ internal class BookFields {
         id = id,
         title = title,
         author = author,
+        categories = categories,
         pages = pages.toInt(),
+        wasRead = wasRead,
         timestamp = System.currentTimeMillis()
     )
 

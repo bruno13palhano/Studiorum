@@ -1,22 +1,28 @@
+import kotlin.Boolean;
+import kotlin.String;
+import kotlin.collections.List;
+
 CREATE TABLE IF NOT EXISTS Book (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     author TEXT NOT NULL,
+    categories TEXT AS List<String> NOT NULL,
     pages INTEGER NOT NULL,
+    wasRead INTEGER AS Boolean NOT NULL,
     timestamp INTEGER NOT NULL
 );
 
 insert:
-INSERT INTO Book(title, author, pages, timestamp) VALUES(?,?,?,?);
+INSERT INTO Book(title, author, categories, pages, wasRead, timestamp) VALUES(?,?,?,?,?,?);
 
 update:
-UPDATE Book SET title = ?, author = ?, pages = ?, timestamp = ? WHERE id = ?;
+UPDATE Book SET title = ?, author = ?, categories = ?, pages = ?, wasRead = ?, timestamp = ? WHERE id = ?;
 
 delete:
 DELETE FROM Book WHERE id = ?;
 
 getById:
-SELECT B.id, B.title, B.author, B.pages, timestamp FROM Book AS B WHERE id = ?;
+SELECT B.id, B.title, B.author, B.categories, B.pages, B.wasRead, B.timestamp FROM Book AS B WHERE id = ?;
 
 getAll:
-SELECT B.id, B.title, B.author, B.pages, timestamp FROM Book AS B;
+SELECT B.id, B.title, B.author, B.categories, B.pages, B.wasRead, B.timestamp FROM Book AS B;
