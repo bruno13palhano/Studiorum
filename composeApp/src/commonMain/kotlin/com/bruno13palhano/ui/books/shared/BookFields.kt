@@ -14,7 +14,7 @@ internal class BookFields {
         private set
     var pages by mutableStateOf("")
         private set
-    var categories by mutableStateOf(emptyList<String>())
+    var categories by mutableStateOf(listOf<String>())
         private set
     var wasRead by mutableStateOf(false)
         private set
@@ -27,8 +27,16 @@ internal class BookFields {
         author = newValue
     }
 
+    fun updateCategoriesChange(newValue: List<String>) {
+        categories = newValue
+    }
+
     fun updatePagesChange(newValue: String) {
         pages = newValue
+    }
+
+    fun updateWasReadChange(newValue: Boolean) {
+        wasRead = newValue
     }
 
     fun isValid() = title.isNotBlank() && author.isNotBlank() && pages.isNotBlank()
