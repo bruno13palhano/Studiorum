@@ -1,10 +1,32 @@
 package com.bruno13palhano.ui.books.shared
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material.Chip
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.ui.components.CustomIntegerField
 import com.bruno13palhano.ui.components.CustomTextField
@@ -12,21 +34,28 @@ import org.jetbrains.compose.resources.stringResource
 import studiorum.composeapp.generated.resources.Res
 import studiorum.composeapp.generated.resources.author
 import studiorum.composeapp.generated.resources.author_placeholder
+import studiorum.composeapp.generated.resources.categories
 import studiorum.composeapp.generated.resources.pages
 import studiorum.composeapp.generated.resources.pages_placeholder
 import studiorum.composeapp.generated.resources.title
 import studiorum.composeapp.generated.resources.title_placeholder
+import studiorum.composeapp.generated.resources.was_read
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun BookContent(
     modifier: Modifier = Modifier,
     title: String,
     author: String,
+    categories: List<String>,
     pages: String,
+    wasRead: Boolean,
     invalidField: Boolean,
-    updateTitleChange: (String) -> Unit,
-    updateAuthorChange: (String) -> Unit,
-    updatePagesChange: (String) -> Unit
+    updateTitleChange: (title: String) -> Unit,
+    updateAuthorChange: (author: String) -> Unit,
+    updateCategoriesChange: (categories: List<String>) -> Unit,
+    updatePagesChange: (pages: String) -> Unit,
+    updateWasReadChange: (wasRead: Boolean) -> Unit
 ) {
     Column(modifier = modifier) {
         CustomTextField(
@@ -61,5 +90,61 @@ internal fun BookContent(
             placeholder = stringResource(Res.string.pages_placeholder),
             isError = invalidField && pages.isBlank()
         )
+
+        ElevatedCard(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+        ) {
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Adaptive(120.dp),
+                verticalItemSpacing = (-8).dp
+            ) {
+                item(span = StaggeredGridItemSpan.FullLine) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        text = stringResource(resource = Res.string.categories),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+
+                items(items = categories) { category ->
+                    Chip(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        onClick = {
+
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = null
+                            )
+                        }
+                    ) {
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = category,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                    }
+                }
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ) {
+            Checkbox(
+                checked = wasRead,
+                onCheckedChange = updateWasReadChange
+            )
+
+            Text(text = stringResource(resource = Res.string.was_read))
+        }
     }
 }

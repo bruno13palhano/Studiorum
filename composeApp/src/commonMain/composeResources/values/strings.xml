@@ -14,4 +14,6 @@
     <string name="pages">Pages</string>
     <string name="pages_placeholder">Enter pages</string>
     <string name="fill_missing_fields">Fill missing fields</string>
+    <string name="categories">Categories</string>
+    <string name="was_read">Was read?</string>
 </resources>
