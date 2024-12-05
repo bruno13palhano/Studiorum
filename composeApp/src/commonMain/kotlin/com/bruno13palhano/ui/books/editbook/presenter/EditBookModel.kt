@@ -13,6 +13,7 @@ internal data class EditBookState(
     val invalidField: Boolean,
     val update: Boolean,
     val delete: Boolean,
+    val categoryVisible: Boolean,
     val bookFields: BookFields
 ) : ViewState {
     companion object {
@@ -20,6 +21,7 @@ internal data class EditBookState(
             invalidField = false,
             update = false,
             delete = false,
+            categoryVisible = false,
             bookFields = BookFields()
         )
     }
@@ -31,6 +33,7 @@ internal sealed interface EditBookEvent : ViewEvent {
     data object InvalidField : EditBookEvent
     data object Done : EditBookEvent
     data object Delete : EditBookEvent
+    data class UpdateCategoryVisibility(val visible: Boolean) : EditBookEvent
     data object NavigateBack : EditBookEvent
 }
 
@@ -45,5 +48,6 @@ internal sealed interface EditBookAction : ViewAction {
     data class OnLoadBook(val id: Long) : EditBookAction
     data object OnDoneClick : EditBookAction
     data object OnDeleteClick : EditBookAction
+    data class OnCategoryVisibilityClick(val visible: Boolean) : EditBookAction
     data object OnNavigateBackClick : EditBookAction
 }

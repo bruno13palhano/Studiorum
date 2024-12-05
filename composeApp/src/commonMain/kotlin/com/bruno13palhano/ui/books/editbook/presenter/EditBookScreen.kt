@@ -130,11 +130,22 @@ private fun EditBookContent(
             modifier = Modifier.padding(it),
             title = state.bookFields.title,
             author = state.bookFields.author,
+            categories = state.bookFields.categories,
+            category = state.bookFields.category,
             pages = state.bookFields.pages,
+            wasRead = state.bookFields.wasRead,
+            categoryVisible = state.categoryVisible,
             invalidField = state.invalidField,
             updateTitleChange = state.bookFields::updateTitleChange,
             updateAuthorChange = state.bookFields::updateAuthorChange,
-            updatePagesChange = state.bookFields::updatePagesChange
+            updateCategoryChange = state.bookFields::updateCategoryChange,
+            addCategory = state.bookFields::addCategory,
+            removeCategory = state.bookFields::removeCategory,
+            updatePagesChange = state.bookFields::updatePagesChange,
+            updateWasReadChange = state.bookFields::updateWasReadChange,
+            updateCategoryVisibility = { visible ->
+                onAction(EditBookAction.OnCategoryVisibilityClick(visible = visible))
+            }
         )
     }
 }

@@ -14,6 +14,10 @@ internal class EditBookActionProcessor : ActionProcessor<EditBookAction, EditBoo
 
             is EditBookAction.OnDeleteClick -> EditBookEvent.Delete
 
+            is EditBookAction.OnCategoryVisibilityClick -> {
+                EditBookEvent.UpdateCategoryVisibility(visible = viewAction.visible)
+            }
+
             is EditBookAction.OnNavigateBackClick -> EditBookEvent.NavigateBack
         }
     }

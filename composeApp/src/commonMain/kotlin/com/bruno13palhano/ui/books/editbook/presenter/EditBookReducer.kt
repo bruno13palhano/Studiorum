@@ -22,6 +22,10 @@ internal class EditBookReducer : Reducer<EditBookState, EditBookEvent, EditBookS
                 previousState.copy(delete = true) to EditBookSideEffect.NavigateBack
             }
 
+            is EditBookEvent.UpdateCategoryVisibility -> {
+                previousState.copy(categoryVisible = event.visible) to null
+            }
+
             is EditBookEvent.NavigateBack -> previousState to EditBookSideEffect.NavigateBack
         }
     }
