@@ -14,6 +14,10 @@ internal class NewBookReducer : Reducer<NewBookState, NewBookEvent, NewBookSideE
 
             is NewBookEvent.Done -> done(previousState = previousState)
 
+            is NewBookEvent.UpdateCategoryVisibility -> {
+                previousState.copy(categoryVisible = event.visible) to null
+            }
+
             is NewBookEvent.NavigateBack -> {
                 previousState to NewBookSideEffect.NavigateBack
             }

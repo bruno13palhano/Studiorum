@@ -7,6 +7,10 @@ internal class NewBookActionProcessor : ActionProcessor<NewBookAction, NewBookEv
         return when (viewAction) {
             is NewBookAction.OnDoneClick -> NewBookEvent.Done
 
+            is NewBookAction.OnCategoryVisibilityClick -> {
+                NewBookEvent.UpdateCategoryVisibility(visible = viewAction.visible)
+            }
+
             is NewBookAction.OnNavigateBackClick -> NewBookEvent.NavigateBack
         }
     }
