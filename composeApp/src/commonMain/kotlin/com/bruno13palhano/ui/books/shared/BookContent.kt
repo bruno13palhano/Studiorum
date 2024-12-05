@@ -1,13 +1,10 @@
 package com.bruno13palhano.ui.books.shared
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -17,10 +14,10 @@ import androidx.compose.material.Chip
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,11 +27,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.ui.components.CustomIntegerField
 import com.bruno13palhano.ui.components.CustomTextField
+import com.bruno13palhano.ui.components.InputDialog
 import org.jetbrains.compose.resources.stringResource
 import studiorum.composeapp.generated.resources.Res
+import studiorum.composeapp.generated.resources.add_category
 import studiorum.composeapp.generated.resources.author
 import studiorum.composeapp.generated.resources.author_placeholder
 import studiorum.composeapp.generated.resources.categories
+import studiorum.composeapp.generated.resources.category
+import studiorum.composeapp.generated.resources.category_placeholder
 import studiorum.composeapp.generated.resources.pages
 import studiorum.composeapp.generated.resources.pages_placeholder
 import studiorum.composeapp.generated.resources.title
@@ -48,14 +49,19 @@ internal fun BookContent(
     title: String,
     author: String,
     categories: List<String>,
+    category: String,
     pages: String,
     wasRead: Boolean,
+    categoryVisible: Boolean,
     invalidField: Boolean,
     updateTitleChange: (title: String) -> Unit,
     updateAuthorChange: (author: String) -> Unit,
-    updateCategoriesChange: (categories: List<String>) -> Unit,
+    updateCategoryChange: (category: String) -> Unit,
+    addCategory: (category: String) -> Unit,
+    removeCategory: (category: String) -> Unit,
     updatePagesChange: (pages: String) -> Unit,
-    updateWasReadChange: (wasRead: Boolean) -> Unit
+    updateWasReadChange: (wasRead: Boolean) -> Unit,
+    updateCategoryVisibility: (visible: Boolean) -> Unit
 ) {
     Column(modifier = modifier) {
         CustomTextField(
@@ -111,9 +117,7 @@ internal fun BookContent(
                 items(items = categories) { category ->
                     Chip(
                         modifier = Modifier.padding(horizontal = 4.dp),
-                        onClick = {
-
-                        },
+                        onClick = { removeCategory(category) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Filled.Close,
@@ -127,6 +131,33 @@ internal fun BookContent(
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
+                    }
+                }
+
+                item(span = StaggeredGridItemSpan.FullLine) {
+                    if (categoryVisible) {
+                        InputDialog(
+                            value = category,
+                            label = stringResource(resource = Res.string.category),
+                            placeholder = stringResource(
+                                resource = Res.string.category_placeholder
+                            ),
+                            onValueChange = updateCategoryChange,
+                            onOk = {
+                                addCategory(it)
+                                updateCategoryVisibility(false)
+                            },
+                            onCancel = { updateCategoryVisibility(false) }
+                        )
+                    }
+
+                    Button(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .wrapContentSize(),
+                        onClick = { updateCategoryVisibility(true) }
+                    ) {
+                        Text(text = stringResource(resource = Res.string.add_category))
                     }
                 }
             }
