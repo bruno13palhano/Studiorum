@@ -8,15 +8,23 @@ import com.bruno13palhano.model.Book
 internal class BookFields {
     var id: Long = 0L
         private set
+
     var title by mutableStateOf("")
         private set
+
     var author by mutableStateOf("")
         private set
+
     var pages by mutableStateOf("")
         private set
-    var categories by mutableStateOf(listOf<String>())
-        private set
+
+    private var _categories by mutableStateOf(emptySet<String>())
+    val categories get() = _categories.toList()
+
     var wasRead by mutableStateOf(false)
+        private set
+
+    var category by mutableStateOf("")
         private set
 
     fun updateTitleChange(newValue: String) {
@@ -27,8 +35,19 @@ internal class BookFields {
         author = newValue
     }
 
-    fun updateCategoriesChange(newValue: List<String>) {
-        categories = newValue
+    fun addCategory(category: String) {
+        if (category.isNotBlank()) {
+            _categories = _categories.plus(category.trim())
+            this.category = ""
+        }
+    }
+
+    fun removeCategory(newValue: String) {
+        _categories = _categories.minus(newValue)
+    }
+
+    fun updateCategoryChange(newValue: String) {
+        category = newValue.trim()
     }
 
     fun updatePagesChange(newValue: String) {
@@ -39,13 +58,14 @@ internal class BookFields {
         wasRead = newValue
     }
 
-    fun isValid() = title.isNotBlank() && author.isNotBlank() && pages.isNotBlank()
+    fun isValid() = title.isNotBlank() && author.isNotBlank()
+            && pages.isNotBlank() && categories.isNotEmpty()
 
     fun toBook(id: Long = 0L) = Book(
         id = id,
         title = title,
         author = author,
-        categories = categories,
+        categories = _categories.toList(),
         pages = pages.toInt(),
         wasRead = wasRead,
         timestamp = System.currentTimeMillis()
@@ -55,6 +75,8 @@ internal class BookFields {
         id = book.id
         title = book.title
         author = book.author
+        _categories = book.categories.toSet()
+        wasRead = book.wasRead
         pages = book.pages.toString()
     }
 }
