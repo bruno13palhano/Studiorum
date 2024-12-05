@@ -123,7 +123,12 @@ fun InputDialog(
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    Dialog(onDismissRequest = onCancel) {
+    Dialog(
+        onDismissRequest = {
+            onCancel()
+            onValueChange("")
+        }
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
